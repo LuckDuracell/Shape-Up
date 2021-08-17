@@ -15,22 +15,21 @@ struct ContentView: View {
         ZStack {
             TabView {
                HomePage()
-                    .tabItem{Label("Home", systemImage: "house")}
+                    .tabItem{Label("Home", systemImage: "house.fill")}
+                LogPage()
+                    .tabItem{Label("Logs", systemImage: "tray.full.fill")}
             }
             .edgesIgnoringSafeArea(.all)
             .onAppear(perform: {
-                if isFirstTimeOpening() {
+                if isFirstTimeOpening() == false{
                     showWelcome.toggle()
                 }
             })
             .sheet(isPresented: $showWelcome, content: {
-                ZStack {
-                    Text("Welcome to Shape Up!")
-                        .font(.title)
-                        .bold()
-                }
+                WelcomeSheet(showWelcome: $showWelcome)
             })
         } .edgesIgnoringSafeArea(.all)
+            .accentColor(Color("MainBlue"))
     }
 }
 
