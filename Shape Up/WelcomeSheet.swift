@@ -23,7 +23,7 @@ struct WelcomeSheet: View {
     
     @State var userGoals = Goals(waterIntake: 6, sleepHours: 8, workoutTime: 45)
     let waterOptions = [3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10]
-    let sleepOptions = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12]
+    let sleepOptions = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10]
     @State var workoutTime: String = ""
     
     var body: some View {
@@ -228,9 +228,11 @@ struct WelcomeSheet: View {
                         Picker("Cups of Water", selection: $userGoals.waterIntake, content: {
                             ForEach(waterOptions, id:\.self, content: {
                                 let text = "\($0)"
-                                let text2 = text.components(separatedBy: ".5")
-                                let text3 = text2[0].components(separatedBy: ".0")
-                                Text(text3[0])
+                                if text.prefix(2) != "10" {
+                                    Text(text.contains(".5") ? text.prefix(3) : text.prefix(1))
+                                } else {
+                                    Text("10")
+                                }
                             })
                         })
                             .pickerStyle(.wheel)
@@ -242,9 +244,11 @@ struct WelcomeSheet: View {
                         Picker("Hours of Sleep", selection: $userGoals.sleepHours, content: {
                             ForEach(sleepOptions, id:\.self, content: {
                                 let text = "\($0)"
-                                let text2 = text.components(separatedBy: ".5")
-                                let text3 = text2[0].components(separatedBy: ".0")
-                                Text(text3[0])
+                                if text.prefix(2) != "10" {
+                                    Text(text.contains(".5") ? text.prefix(3) : text.prefix(1))
+                                } else {
+                                    Text("10")
+                                }
                             })
                         })
                             .pickerStyle(.wheel)
@@ -252,7 +256,8 @@ struct WelcomeSheet: View {
                             .clipped()
                         Spacer()
                         Button {
-                            
+                            userGoals.workoutTime = Double(workoutTime) ?? 30
+                            Goals.saveToFile([userGoals])
                             showWelcome.toggle()
                         } label: {
                             Text("Get Started")

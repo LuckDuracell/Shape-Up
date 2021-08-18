@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var showWelcome = false
     
     var body: some View {
         ZStack {
@@ -20,14 +19,6 @@ struct ContentView: View {
                     .tabItem{Label("Logs", systemImage: "tray.full.fill")}
             }
             .edgesIgnoringSafeArea(.all)
-            .onAppear(perform: {
-                if isFirstTimeOpening() == false{
-                    showWelcome.toggle()
-                }
-            })
-            .sheet(isPresented: $showWelcome, content: {
-                WelcomeSheet(showWelcome: $showWelcome)
-            })
         } .edgesIgnoringSafeArea(.all)
             .accentColor(Color("MainBlue"))
     }

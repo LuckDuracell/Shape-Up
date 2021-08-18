@@ -30,6 +30,24 @@ struct Goals: Hashable, Codable, LocalFileStorable {
     var workoutTime: Double
 }
 
+struct DaysGoals: Hashable, Codable, LocalFileStorable {
+    static var fileName: String {
+        return "DaysGoals"
+    }
+    var waterIntake: Double
+    var sleepHours: Double
+    var workoutTime: Double
+    var date: Date
+}
+
+struct Habit: Hashable, Codable, LocalFileStorable {
+    static var fileName: String {
+        return "Habit"
+    }
+    var info: String
+    var title: String
+}
+
 protocol LocalFilesStorable: Codable {
     static var fileName: String { get }
 }
